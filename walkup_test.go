@@ -98,7 +98,7 @@ func TestWalkList(t *testing.T) {
 		},
 	}
 
-	for n := 0; n < len(tests); n++ {
+	for n := range tests {
 		assert.Equal(t, tests[n].Must, walkList(tests[n].Input.(test).Dir, tests[n].Input.(test).N))
 	}
 }
