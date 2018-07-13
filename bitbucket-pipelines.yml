@@ -19,6 +19,6 @@ pipelines:
           - cd "${PACKAGE_PATH}"
           - go get -v
           - go get github.com/stretchr/testify/assert
-            go get github.com/Qs-F/mintest
+          - go get github.com/Qs-F/mintest
           - go build -v
           - go test -v
