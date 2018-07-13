@@ -19,7 +19,7 @@ func Walkup(base string, filename string, level int) []string {
 			wg.Done()
 			continue
 		}
-		if fi.Mode().IsRegular() {
+		if fi.Mode().IsRegular() || fi.Mode().IsDir() {
 			mutex.Lock()
 			list = append(list, filepath.Join(dir, filename))
 			mutex.Unlock()
