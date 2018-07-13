@@ -27,10 +27,7 @@ func TestWalkup(t *testing.T) {
 	}
 
 	// Walkup( /* basedir */, /* filename */, /* directory level (0 means to root dir) */ )
-	filelist, err := Walkup(filepath.Join(current, "_testdata"), "TEMP", 0)
-	if err != nil {
-		t.Error(err.Error())
-	}
+	filelist := Walkup(filepath.Join(current, "_testdata"), "TEMP", 0)
 
 	if !assert.Equal(t, filelist, []string{filepath.Join(dir, "_testdata", "TEMP")}) {
 		t.Error("Files does not match")
