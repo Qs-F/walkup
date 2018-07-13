@@ -18,5 +18,6 @@ pipelines:
           - tar -cO --exclude-vcs --exclude=bitbucket-pipelines.yml . | tar -xv -C "${PACKAGE_PATH}"
           - cd "${PACKAGE_PATH}"
           - go get -v
+          - go get github.com/stretchr/testify/assert
           - go build -v
           - go test -v
