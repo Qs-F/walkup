@@ -1,12 +1,33 @@
 package walkup
 
 import (
+	"os"
 	"path/filepath"
 	"strings"
+	"sync"
 )
 
-func Walkup(base string, filename string, level int) ([]string, error) {
-	return []string{filepath.Clean(filepath.Join(base, "..", "..", "..", "TEMP"))}, nil
+func Walkup(base string, filename string, level int) []string {
+	var mutex = &sync.Mutex{}
+	var wg sync.WaitGroup
+	dirs := walkList(base, level)
+	list := []string{}
+	wg.Add(len(dirs))
+	for _, dir := range dirs {
+		fi, err := os.Lstat(filepath.Join(dir, filename))
+		if err != nil {
+			wg.Done()
+			continue
+		}
+		if fi.Mode().IsRegular() {
+			mutex.Lock()
+			list = append(list, filepath.Join(dir, filename))
+			mutex.Unlock()
+		}
+		wg.Done()
+	}
+	wg.Wait()
+	return list
 }
 
 func parent(dir string) string {
