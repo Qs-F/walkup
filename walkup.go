@@ -47,7 +47,7 @@ func walkList(dir string, n int) []string {
 
 	list := []string{}
 
-	L:
+L:
 	for i := 0; i < n; i++ {
 		list = append(list, dir)
 		if dir == "/" {
