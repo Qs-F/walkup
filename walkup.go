@@ -35,9 +35,10 @@ func parent(dir string) string {
 }
 
 func walkList(dir string, n int) []string {
+	dir = filepath.Clean(dir)
 	// Slashes is the number of least directory level, so it is no problem if loop breaks
 	// when they met root slash
-	slashes := strings.Count(dir, "/")
+	slashes := strings.Count(dir, string(filepath.Separator))
 	if n == 0 {
 		n = slashes + 1
 	} else if n+1 > slashes {
@@ -46,7 +47,7 @@ func walkList(dir string, n int) []string {
 
 	list := []string{}
 
-L:
+	L:
 	for i := 0; i < n; i++ {
 		list = append(list, dir)
 		if dir == "/" {
