@@ -14,17 +14,20 @@ func Walkup(base string, filename string, level int) []string {
 	list := []string{}
 	wg.Add(len(dirs))
 	for _, dir := range dirs {
-		fi, err := os.Lstat(filepath.Join(dir, filename))
-		if err != nil {
+		go func(dir string) {
+			fi, err := os.Lstat(filepath.Join(dir, filename))
+			if err != nil {
+				wg.Done()
+				return
+			}
+			if fi.Mode().IsRegular() || fi.Mode().IsDir() {
+				mutex.Lock()
+				list = append(list, filepath.Join(dir, filename))
+				mutex.Unlock()
+			}
 			wg.Done()
-			continue
-		}
-		if fi.Mode().IsRegular() || fi.Mode().IsDir() {
-			mutex.Lock()
-			list = append(list, filepath.Join(dir, filename))
-			mutex.Unlock()
-		}
-		wg.Done()
+		}(dir)
+		continue
 	}
 	wg.Wait()
 	return list
