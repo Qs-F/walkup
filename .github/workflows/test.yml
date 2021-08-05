@@ -7,6 +7,8 @@ on:
     paths:
       - ".github/workflows/test.yml"
       - "*.go"
+      - "go.mod"
+      - "go.sum"
       - "_testdata/**"
 
 jobs:
