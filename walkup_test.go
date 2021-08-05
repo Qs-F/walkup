@@ -5,9 +5,17 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/Qs-F/mintest"
 	"github.com/stretchr/testify/assert"
 )
+
+type TestSlice struct {
+	Input  interface{}
+	Must   interface{}
+	Error  bool
+	result interface{}
+}
+
+type TestSlices []TestSlice
 
 func TestWalkup(t *testing.T) {
 	dir, err := os.Getwd()
@@ -78,7 +86,7 @@ func TestWalkList(t *testing.T) {
 		Dir string
 		N   int
 	}
-	tests := mintest.TestSlices{
+	tests := TestSlices{
 		{
 			Input: test{
 				Dir: "/_testdata/A/B",
